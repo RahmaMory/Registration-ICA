@@ -20,8 +20,7 @@ const registrationSchema = z
 
 age: z.coerce
   .number()
-  .min(10, "Age must be at least 10")
-  ,
+  .min(10, "Age must be at least 10"),
     faculty: z.string().min(1, "Faculty is required"),
     academicYear: z.string().min(1),
 
@@ -93,7 +92,7 @@ depositAmount: z.coerce
   });
 
 
-type FormData = z.infer<typeof registrationSchema>;
+type FormData = z.output<typeof registrationSchema>;
 export default function RegistrationPage() {
 const {
   register,
@@ -104,7 +103,7 @@ const {
   resetField,
   formState: { errors },
 } = useForm<FormData>({
-  resolver: zodResolver(registrationSchema),
+resolver: zodResolver(registrationSchema) as any,
   defaultValues: {
     depositPaid: false,
   },
